@@ -52,56 +52,56 @@ interface DecoderInterface {
      *
      * Pr. default the method does not check for these elements.
      *
-     * @param string $file Path to the torrent file we want to decode
+     * @param string  $file   Path to the torrent file we want to decode
      * @param boolean $strict If set to true this method will check for certain elements in the
      *                        dictionary.
-     * @return array Returns the decoded version of the file as an array
+     * @return array                     Returns the decoded version of the file as an array
      * @throws \InvalidArgumentException
      */
-    function decodeFile($file, $strict = false);
+    public function decodeFile($file, $strict = false);
 
     /**
      * Decode any bittorrent encoded string
      *
-     * @param string $string The string to decode
-     * @return int|string|array Returns the native PHP counterpart of the encoded string
+     * @param  string                    $string The string to decode
+     * @return int|string|array          Returns the native PHP counterpart of the encoded string
      * @throws \InvalidArgumentException
      */
-    function decode($string);
+    public function decode($string);
 
     /**
      * Decode an encoded PHP integer
      *
-     * @param string $integer The integer to decode
-     * @return int Returns the decoded integer
+     * @param  string                    $integer The integer to decode
+     * @return int                       Returns the decoded integer
      * @throws \InvalidArgumentException
      */
-    function decodeInteger($integer);
+    public function decodeInteger($integer);
 
     /**
      * Decode an encoded PHP string
      *
-     * @param string $string The string to decode
-     * @return string Returns the decoded string value
+     * @param  string                    $string The string to decode
+     * @return string                    Returns the decoded string value
      * @throws \InvalidArgumentException
      */
-    function decodeString($string);
+    public function decodeString($string);
 
     /**
      * Decode an encoded PHP array
      *
-     * @param string $list Encoded list
-     * @return array Returns a numerical array
+     * @param  string                    $list Encoded list
+     * @return array                     Returns a numerical array
      * @throws \InvalidArgumentException
      */
-    function decodeList($list);
+    public function decodeList($list);
 
     /**
      * Decode an encoded PHP associative array
      *
-     * @param string $dictionary Encoded dictionary
-     * @return array Returns an associative array
+     * @param  string                    $dictionary Encoded dictionary
+     * @return array                     Returns an associative array
      * @throws \InvalidArgumentException
      */
-    function decodeDictionary($dictionary);
+    public function decodeDictionary($dictionary);
 }

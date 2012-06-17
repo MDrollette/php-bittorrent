@@ -44,45 +44,45 @@ interface EncoderInterface {
     /**
      * Encode any encodable variable
      *
-     * @param int|string|array $var The variable to encode
-     * @return string Returns the encoded string
+     * @param  int|string|array          $var The variable to encode
+     * @return string                    Returns the encoded string
      * @throws \InvalidArgumentException
      */
-    function encode($var);
+    public function encode($var);
 
     /**
      * Encode an integer
      *
-     * @param int $integer The integer to encoded
-     * @return string Returns the encoded string
+     * @param  int                       $integer The integer to encoded
+     * @return string                    Returns the encoded string
      * @throws \InvalidArgumentException
      */
-    function encodeInteger($integer);
+    public function encodeInteger($integer);
 
     /**
      * Encode a string
      *
-     * @param string $string The string to encode
-     * @return string Returns the encoded string
+     * @param  string                    $string The string to encode
+     * @return string                    Returns the encoded string
      * @throws \InvalidArgumentException
      */
-    function encodeString($string);
+    public function encodeString($string);
 
     /**
      * Encode a list (numerically indexed array)
      *
-     * @param array $list The array to encode
-     * @return string Returns the encoded string
+     * @param  array                     $list The array to encode
+     * @return string                    Returns the encoded string
      * @throws \InvalidArgumentException
      */
-    function encodeList($list);
+    public function encodeList($list);
 
     /**
      * Encode a dictionary (associative PHP array)
      *
-     * @param array $dictionary The array to encode
-     * @return string Returns the encoded string
+     * @param  array                     $dictionary The array to encode
+     * @return string                    Returns the encoded string
      * @throws \InvalidArgumentException
      */
-    function encodeDictionary($dictionary);
+    public function encodeDictionary($dictionary);
 }

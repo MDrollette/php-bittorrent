@@ -49,14 +49,16 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * Set up the encoder
      */
-    public function setUp() {
+    public function setUp()
+    {
         $this->encoder = new Encoder();
     }
 
     /**
      * Tear down the encoder
      */
-    public function tearDown() {
+    public function tearDown()
+    {
         $this->encoder = null;
     }
 
@@ -65,7 +67,8 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getEncodeIntegerData() {
+    public function getEncodeIntegerData()
+    {
         return array(
             array(-1, 'i-1e'),
             array(0, 'i0e'),
@@ -76,14 +79,16 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getEncodeIntegerData()
      */
-    public function testEncodeInteger($value, $encoded) {
+    public function testEncodeInteger($value, $encoded)
+    {
         $this->assertSame($encoded, $this->encoder->encodeInteger($value));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testEncodeNonIntegerAsInteger() {
+    public function testEncodeNonIntegerAsInteger()
+    {
         $this->encoder->encodeInteger('1');
     }
 
@@ -92,7 +97,8 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getEncodeStringData() {
+    public function getEncodeStringData()
+    {
         return array(
             array('spam', '4:spam'),
             array('foobar', '6:foobar'),
@@ -103,14 +109,16 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getEncodeStringData()
      */
-    public function testEncodeString($value, $encoded) {
+    public function testEncodeString($value, $encoded)
+    {
         $this->assertSame($encoded, $this->encoder->encodeString($value));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testEncodeNonStringAsString() {
+    public function testEncodeNonStringAsString()
+    {
         $this->encoder->encodeString(1);
     }
 
@@ -119,7 +127,8 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getEncodeListData() {
+    public function getEncodeListData()
+    {
         return array(
             array(array('spam', 1, array(1)), 'l4:spami1eli1eee'),
         );
@@ -128,14 +137,16 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getEncodeListData()
      */
-    public function testEncodeList($value, $encoded) {
+    public function testEncodeList($value, $encoded)
+    {
         $this->assertSame($encoded, $this->encoder->encodeList($value));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testEncodeNonListAsList() {
+    public function testEncodeNonListAsList()
+    {
         $this->encoder->encodeList(1);
     }
 
@@ -144,7 +155,8 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getEncodeDictionaryData() {
+    public function getEncodeDictionaryData()
+    {
         return array(
             array(array('1' => 'foo', 'foo' => 'bar', 'list' => array(1, 2, 3)), 'd1:13:foo3:foo3:bar4:listli1ei2ei3eee'),
         );
@@ -153,14 +165,16 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getEncodeDictionaryData()
      */
-    public function testEncodeDictionary($value, $encoded) {
+    public function testEncodeDictionary($value, $encoded)
+    {
         $this->assertSame($encoded, $this->encoder->encodeDictionary($value));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testEncodeDictionaryListAsDictionary() {
+    public function testEncodeDictionaryListAsDictionary()
+    {
         $this->encoder->encodeDictionary('foo');
     }
 
@@ -169,7 +183,8 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getEncodeData() {
+    public function getEncodeData()
+    {
         return array(
             array(1, 'i1e'),
             array('spam', '4:spam'),
@@ -181,14 +196,16 @@ class EncoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getEncodeData()
      */
-    public function testEncodeUsingGenericMethod($value, $encoded) {
+    public function testEncodeUsingGenericMethod($value, $encoded)
+    {
         $this->assertSame($encoded, $this->encoder->encode($value));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testEncodeNonSupportedType() {
+    public function testEncodeNonSupportedType()
+    {
         $this->encoder->encode(new \stdClass());
     }
 }

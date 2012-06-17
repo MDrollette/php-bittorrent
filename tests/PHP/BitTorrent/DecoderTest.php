@@ -49,14 +49,16 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * Set up the decoder
      */
-    public function setUp() {
+    public function setUp()
+    {
         $this->decoder = new Decoder(new Encoder());
     }
 
     /**
      * Tear down the decoder
      */
-    public function tearDown() {
+    public function tearDown()
+    {
         $this->decoder = null;
     }
 
@@ -65,7 +67,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getDecodeIntegerData() {
+    public function getDecodeIntegerData()
+    {
         return array(
             array('i1e', 1),
             array('i-1e', -1),
@@ -76,7 +79,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getDecodeIntegerData()
      */
-    public function testDecoderInteger($encoded, $value) {
+    public function testDecoderInteger($encoded, $value)
+    {
         $this->assertSame($value, $this->decoder->decodeInteger($encoded));
     }
 
@@ -85,7 +89,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getDecodeInvalidIntegerData() {
+    public function getDecodeInvalidIntegerData()
+    {
         return array(
             array('i01e'),
             array('i-01e'),
@@ -97,21 +102,24 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      * @dataProvider getDecodeInvalidIntegerData()
      * @expectedException InvalidArgumentException
      */
-    public function testDecodeInvalidInteger($value) {
+    public function testDecodeInvalidInteger($value)
+    {
         $this->decoder->decodeInteger($value);
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testDecodeStringAsInteger() {
+    public function testDecodeStringAsInteger()
+    {
         $this->decoder->decodeInteger('4:spam');
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testDecodePartialInteger() {
+    public function testDecodePartialInteger()
+    {
         $this->decoder->decodeInteger('i10');
     }
 
@@ -120,7 +128,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getDecodeStringData() {
+    public function getDecodeStringData()
+    {
         return array(
             array('4:spam', 'spam'),
             array('11:test string', 'test string'),
@@ -131,21 +140,24 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getDecodeStringData()
      */
-    public function testDecodeString($encoded, $value) {
+    public function testDecodeString($encoded, $value)
+    {
         $this->assertSame($value, $this->decoder->decodeString($encoded));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testDecodeInvalidString() {
+    public function testDecodeInvalidString()
+    {
         $this->decoder->decodeString('4spam');
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testDecodeStringWithInvalidLength() {
+    public function testDecodeStringWithInvalidLength()
+    {
         $this->decoder->decodeString('6:spam');
     }
 
@@ -154,7 +166,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getDecodeListData() {
+    public function getDecodeListData()
+    {
         return array(
             array('li1ei2ei3ee', array(1, 2, 3)),
         );
@@ -163,14 +176,16 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getDecodeListData()
      */
-    public function testDecodeList($encoded, $value) {
+    public function testDecodeList($encoded, $value)
+    {
         $this->assertSame($value, $this->decoder->decodeList($encoded));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testDecodeInvalidList() {
+    public function testDecodeInvalidList()
+    {
         $this->decoder->decodeList('4:spam');
     }
 
@@ -179,7 +194,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getDecodeDictionaryData() {
+    public function getDecodeDictionaryData()
+    {
         return array(
             array('d3:foo3:bar4:spam4:eggse', array('foo' => 'bar', 'spam' => 'eggs')),
         );
@@ -188,14 +204,16 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getDecodeDictionaryData()
      */
-    public function testDecodeDictionary($encoded, $value) {
+    public function testDecodeDictionary($encoded, $value)
+    {
         $this->assertSame($value, $this->decoder->decodeDictionary($encoded));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testDecodeInvalidDictionary() {
+    public function testDecodeInvalidDictionary()
+    {
         $this->decoder->decodeDictionary('4:spam');
     }
 
@@ -204,7 +222,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getGenericDecodeData() {
+    public function getGenericDecodeData()
+    {
         return array(
             array('i1e', 1),
             array('4:spam', 'spam'),
@@ -216,14 +235,16 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider getGenericDecodeData()
      */
-    public function testGenericDecode($encoded, $value) {
+    public function testGenericDecode($encoded, $value)
+    {
         $this->assertSame($value, $this->decoder->decode($encoded));
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testGenericDecodeWithInvalidData() {
+    public function testGenericDecodeWithInvalidData()
+    {
         $this->decoder->decode('foo');
     }
 
@@ -231,7 +252,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Missing "announce" key
      */
-    public function testDecodeTorrentFileStrictWithMissingAnnounce() {
+    public function testDecodeTorrentFileStrictWithMissingAnnounce()
+    {
         $file = __DIR__ . '/_files/testMissingAnnounce.torrent';
         $this->decoder->decodeFile($file, true);
     }
@@ -240,7 +262,8 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Missing "info" key
      */
-    public function testDecodeTorrentFileStrictWithMissingInfo() {
+    public function testDecodeTorrentFileStrictWithMissingInfo()
+    {
         $file = __DIR__ . '/_files/testMissingInfo.torrent';
         $this->decoder->decodeFile($file, true);
     }
@@ -249,12 +272,14 @@ class DecoderTest extends \PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage File
      */
-    public function testDecodeNonReadableFile() {
+    public function testDecodeNonReadableFile()
+    {
         $file = __DIR__ . '/nonExistingFile';
         $this->decoder->decodeFile($file);
     }
 
-    public function testDecodeFileWithStrictChecksEnabled() {
+    public function testDecodeFileWithStrictChecksEnabled()
+    {
         $list = $this->decoder->decodeFile(__DIR__ . '/_files/valid.torrent', true);
 
         $this->assertInternalType('array', $list);

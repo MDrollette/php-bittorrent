@@ -48,7 +48,8 @@ use RecursiveDirectoryIterator,
  * @license http://www.opensource.org/licenses/mit-license MIT License
  * @link https://github.com/christeredvartsen/php-bittorrent
  */
-class Torrent {
+class Torrent
+{
     /**
      * The exponent to use when making the pieces
      *
@@ -110,7 +111,8 @@ class Torrent {
      *
      * @param string $announceUrl Optional announce URL
      */
-    public function __construct($announceUrl = null) {
+    public function __construct($announceUrl = null)
+    {
         if ($announceUrl !== null) {
             $this->setAnnounce($announceUrl);
         }
@@ -119,12 +121,13 @@ class Torrent {
     /**
      * Populate the instance of the object based on a torrent file
      *
-     * @param string $path Path to the torrent file
-     * @param DecoderInterface $decoder The decoder to use to decode the file
+     * @param  string                   $path    Path to the torrent file
+     * @param  DecoderInterface         $decoder The decoder to use to decode the file
      * @throws InvalidArgumentException
-     * @return Torrent Returns a new instance of this class
+     * @return Torrent                  Returns a new instance of this class
      */
-    static public function createFromTorrentFile($path, DecoderInterface $decoder = null) {
+    public static function createFromTorrentFile($path, DecoderInterface $decoder = null)
+    {
         if (!is_file($path)) {
             throw new InvalidArgumentException($path . ' does not exist.');
         }
@@ -184,11 +187,12 @@ class Torrent {
      * Some of the code in this method is ported directly from the official btmakemetafile script
      * by Bram Cohen.
      *
-     * @param string $path Path to a directory or a single file
-     * @param string $announceUrl URL to the announce
+     * @param  string  $path        Path to a directory or a single file
+     * @param  string  $announceUrl URL to the announce
      * @return Torrent Returns a new instance of this class
      */
-    static public function createFromPath($path, $announceUrl) {
+    public static function createFromPath($path, $announceUrl)
+    {
         // Create a new torrent instance
         $torrent = new static($announceUrl);
 
@@ -206,7 +210,7 @@ class Torrent {
                 'filename' => basename($absolutePath),
                 'filesize' => filesize($absolutePath),
             );
-        } else if (is_dir($absolutePath)) {
+        } elseif (is_dir($absolutePath)) {
             $dir = new RecursiveDirectoryIterator($absolutePath);
             $iterator = new RecursiveIteratorIterator($dir);
 
@@ -274,7 +278,7 @@ class Torrent {
             usort($files, function($a, $b) {
                 if ($a['filename'] < $b['filename']) {
                     return -1;
-                } else if ($a['filename'] > $b['filename']) {
+                } elseif ($a['filename'] > $b['filename']) {
                     return 1;
                 }
 
@@ -347,10 +351,11 @@ class Torrent {
     /**
      * Set the piece length exponent
      *
-     * @param int $pieceLengthExp The exponent to set
+     * @param  int     $pieceLengthExp The exponent to set
      * @return Torrent Returns self for a fluent interface
      */
-    public function setPieceLengthExp($pieceLengthExp) {
+    public function setPieceLengthExp($pieceLengthExp)
+    {
         $this->pieceLengthExp = (int) $pieceLengthExp;
 
         return $this;
@@ -362,17 +367,19 @@ class Torrent {
      * @return int Returns the piece length exponent used when creating a torrent instance from a
      *             path
      */
-    public function getPieceLengthExp() {
+    public function getPieceLengthExp()
+    {
         return $this->pieceLengthExp;
     }
 
     /**
      * Set the announce URL
      *
-     * @param string $announceUrl The URL to set
+     * @param  string  $announceUrl The URL to set
      * @return Torrent Returns self for a fluent interface
      */
-    public function setAnnounce($announceUrl) {
+    public function setAnnounce($announceUrl)
+    {
         $this->announce = $announceUrl;
 
         return $this;
@@ -383,17 +390,19 @@ class Torrent {
      *
      * @return string Returns the URL to the tracker (if set)
      */
-    public function getAnnounce() {
+    public function getAnnounce()
+    {
         return $this->announce;
     }
 
     /**
      * Set the announce list
      *
-     * @param array $announceList The array of URLs to set
+     * @param  array   $announceList The array of URLs to set
      * @return Torrent Returns self for a fluent interface
      */
-    public function setAnnounceList($announceList) {
+    public function setAnnounceList($announceList)
+    {
         $this->announceList = $announceList;
 
         return $this;
@@ -404,17 +413,19 @@ class Torrent {
      *
      * @return array Returns the URL to the tracker (if set)
      */
-    public function getAnnounceList() {
+    public function getAnnounceList()
+    {
         return $this->announceList;
     }
 
     /**
      * Set the comment
      *
-     * @param string $comment Comment to attach to the torrent file
+     * @param  string  $comment Comment to attach to the torrent file
      * @return Torrent Returns self for a fluent interface
      */
-    public function setComment($comment) {
+    public function setComment($comment)
+    {
         $this->comment = $comment;
 
         return $this;
@@ -425,17 +436,19 @@ class Torrent {
      *
      * @return string Returns an optional comment
      */
-    public function getComment() {
+    public function getComment()
+    {
         return $this->comment;
     }
 
     /**
      * Set the created by property
      *
-     * @param string $createdBy Who/what created the torrent file
+     * @param  string  $createdBy Who/what created the torrent file
      * @return Torrent Returns self for a fluent interface
      */
-    public function setCreatedBy($createdBy) {
+    public function setCreatedBy($createdBy)
+    {
         $this->createdBy = $createdBy;
 
         return $this;
@@ -446,17 +459,19 @@ class Torrent {
      *
      * @return string Returns who created the torrent (if set)
      */
-    public function getCreatedBy() {
+    public function getCreatedBy()
+    {
         return $this->createdBy;
     }
 
     /**
      * Set the creation timestamp
      *
-     * @param int $createdAt Unix timestamp
+     * @param  int     $createdAt Unix timestamp
      * @return Torrent Returns self for a fluent interface
      */
-    public function setCreatedAt($createdAt) {
+    public function setCreatedAt($createdAt)
+    {
         $this->createdAt = (int) $createdAt;
 
         return $this;
@@ -467,17 +482,19 @@ class Torrent {
      *
      * @return int Returns a unix timestamp
      */
-    public function getCreatedAt() {
+    public function getCreatedAt()
+    {
         return $this->createdAt;
     }
 
     /**
      * Set the info part of the torrent
      *
-     * @param array $info Array with information about the torrent file
+     * @param  array   $info Array with information about the torrent file
      * @return Torrent Returns self for a fluent interface
      */
-    public function setInfo(array $info) {
+    public function setInfo(array $info)
+    {
         $this->info = $info;
 
         return $this;
@@ -488,17 +505,19 @@ class Torrent {
      *
      * @return array Returns the info part of the torrent
      */
-    public function getInfo() {
+    public function getInfo()
+    {
         return $this->info;
     }
 
     /**
      * Set an array of non-standard meta info that will be encoded in this torrent
      *
-     * @param array $extra Array with information about the torrent file
+     * @param  array   $extra Array with information about the torrent file
      * @return Torrent Returns self for a fluent interface
      */
-    public function setExtraMeta(array $extra) {
+    public function setExtraMeta(array $extra)
+    {
         $this->extraMeta = $extra;
 
         return $this;
@@ -509,7 +528,8 @@ class Torrent {
      *
      * @return array Returns an array of any non-standard meta info on this torrent
      */
-    public function getExtraMeta() {
+    public function getExtraMeta()
+    {
         return $this->extraMeta;
     }
 
@@ -519,13 +539,14 @@ class Torrent {
      * This method will save the current object to a file. If the file specified exists it will be
      * overwritten.
      *
-     * @param string $filename Path to the torrent file we want to save
-     * @param EncoderInterface $encoder Encoder used to encode the information
+     * @param  string                   $filename Path to the torrent file we want to save
+     * @param  EncoderInterface         $encoder  Encoder used to encode the information
      * @throws InvalidArgumentException
      * @throws RuntimeException
-     * @return Torrent Returns self for a fluent interface
+     * @return Torrent                  Returns self for a fluent interface
      */
-    public function save($filename, EncoderInterface $encoder = null) {
+    public function save($filename, EncoderInterface $encoder = null)
+    {
         if (!is_writable($filename) && !is_writable(dirname($filename))) {
             throw new InvalidArgumentException('Could not open file "' . $filename . '" for writing.');
         }
@@ -598,7 +619,8 @@ class Torrent {
      *                      files otherwise.
      * @throws RuntimeException
      */
-    public function getFileList() {
+    public function getFileList()
+    {
         $info = $this->getInfo();
 
         if ($info === null) {
@@ -615,10 +637,11 @@ class Torrent {
     /**
      * Get the size of the files in the torrent
      *
-     * @return int Returns the size of the files in the torrent in bytes
+     * @return int              Returns the size of the files in the torrent in bytes
      * @throws RuntimeException
      */
-    public function getSize() {
+    public function getSize()
+    {
         $info = $this->getInfo();
 
         if ($info === null) {
@@ -643,10 +666,11 @@ class Torrent {
     /**
      * Get the name that the content will be saved as
      *
-     * @return string The name of the torrent
+     * @return string           The name of the torrent
      * @throws RuntimeException
      */
-    public function getName() {
+    public function getName()
+    {
         $info = $this->getInfo();
 
         if ($info === null) {

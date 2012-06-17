@@ -42,7 +42,8 @@ use InvalidArgumentException;
  * @license http://www.opensource.org/licenses/mit-license MIT License
  * @link https://github.com/christeredvartsen/php-bittorrent
  */
-class Decoder implements DecoderInterface {
+class Decoder implements DecoderInterface
+{
     /**
      * Encoder instance
      *
@@ -55,7 +56,8 @@ class Decoder implements DecoderInterface {
      *
      * @param PHP\BitTorrent\EncoderInterface $encoder An instance of an encoder
      */
-    public function __construct(EncoderInterface $encoder = null) {
+    public function __construct(EncoderInterface $encoder = null)
+    {
         if ($encoder === null) {
             $encoder = new Encoder();
         }
@@ -66,7 +68,8 @@ class Decoder implements DecoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function decodeFile($file, $strict = false) {
+    public function decodeFile($file, $strict = false)
+    {
         if (!is_readable($file)) {
             throw new InvalidArgumentException('File ' . $file . ' does not exist or can not be read.');
         }
@@ -76,7 +79,7 @@ class Decoder implements DecoderInterface {
         if ($strict) {
             if (!isset($dictionary['announce']) || !is_string($dictionary['announce'])) {
                 throw new InvalidArgumentException('Missing "announce" key.');
-            } else if (!isset($dictionary['info']) || !is_array($dictionary['info'])) {
+            } elseif (!isset($dictionary['info']) || !is_array($dictionary['info'])) {
                 throw new InvalidArgumentException('Missing "info" key.');
             }
         }
@@ -87,14 +90,15 @@ class Decoder implements DecoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function decode($string) {
+    public function decode($string)
+    {
         if ($string[0] === 'i') {
             return $this->decodeInteger($string);
-        } else if ($string[0] === 'l') {
+        } elseif ($string[0] === 'l') {
             return $this->decodeList($string);
-        } else if ($string[0] === 'd') {
+        } elseif ($string[0] === 'd') {
             return $this->decodeDictionary($string);
-        } else if (preg_match('/^\d+:/', $string)) {
+        } elseif (preg_match('/^\d+:/', $string)) {
             return $this->decodeString($string);
         }
 
@@ -104,7 +108,8 @@ class Decoder implements DecoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function decodeInteger($integer) {
+    public function decodeInteger($integer)
+    {
         if ($integer[0] !== 'i' || (!$ePos = strpos($integer, 'e'))) {
             throw new InvalidArgumentException('Invalid integer. Integers must start wth "i" and end with "e".');
         }
@@ -122,7 +127,8 @@ class Decoder implements DecoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function decodeString($string) {
+    public function decodeString($string)
+    {
         $stringParts = explode(':', $string, 2);
 
         // The string must have two parts
@@ -143,7 +149,8 @@ class Decoder implements DecoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function decodeList($list) {
+    public function decodeList($list)
+    {
         if ($list[0] !== 'l') {
             throw new InvalidArgumentException('Parameter is not an encoded list.');
         }
@@ -170,7 +177,8 @@ class Decoder implements DecoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function decodeDictionary($dictionary) {
+    public function decodeDictionary($dictionary)
+    {
         if ($dictionary[0] !== 'd') {
             throw new InvalidArgumentException('Parameter is not an encoded dictionary.');
         }

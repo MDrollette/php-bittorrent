@@ -42,16 +42,18 @@ use InvalidArgumentException;
  * @license http://www.opensource.org/licenses/mit-license MIT License
  * @link https://github.com/christeredvartsen/php-bittorrent
  */
-class Encoder implements EncoderInterface {
+class Encoder implements EncoderInterface
+{
     /**
      * {@inheritDoc}
      */
-    public function encode($var) {
+    public function encode($var)
+    {
         if (is_int($var)) {
             return $this->encodeInteger($var);
-        } else if (is_string($var)) {
+        } elseif (is_string($var)) {
             return $this->encodeString($var);
-        } else if (is_array($var)) {
+        } elseif (is_array($var)) {
             $size = count($var);
 
             for ($i = 0; $i < $size; $i++) {
@@ -69,7 +71,8 @@ class Encoder implements EncoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function encodeInteger($integer) {
+    public function encodeInteger($integer)
+    {
         if (!is_int($integer)) {
             throw new InvalidArgumentException('Expected integer, got: ' . gettype($integer) . '.');
         }
@@ -80,7 +83,8 @@ class Encoder implements EncoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function encodeString($string) {
+    public function encodeString($string)
+    {
         if (!is_string($string)) {
             throw new InvalidArgumentException('Expected string, got: ' . gettype($string) . '.');
         }
@@ -91,7 +95,8 @@ class Encoder implements EncoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function encodeList($list) {
+    public function encodeList($list)
+    {
         if (!is_array($list)) {
             throw new InvalidArgumentException('Expected array, got: ' . gettype($list) . '.');
         }
@@ -108,7 +113,8 @@ class Encoder implements EncoderInterface {
     /**
      * {@inheritDoc}
      */
-    public function encodeDictionary($dictionary) {
+    public function encodeDictionary($dictionary)
+    {
         if (!is_array($dictionary)) {
             throw new InvalidArgumentException('Expected array, got: ' . gettype($dictionary) . '.');
         }

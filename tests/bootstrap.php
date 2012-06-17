@@ -38,6 +38,7 @@ spl_autoload_register(function($className) {
 
         if (is_file($absPath)) {
             require $absPath;
+
             return true;
         }
     }
